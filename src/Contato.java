@@ -7,7 +7,7 @@ public class Contato {
     private Long lengthTelefones;
     private ArrayList<Telefone> telefones;
 
-    public Contato(Long id,String nome, String sobreNome){
+    public Contato(Long id, String nome, String sobreNome) {
         this.id = id;
         this.nome = nome;
         this.sobreNome = sobreNome;
@@ -15,11 +15,12 @@ public class Contato {
         this.lengthTelefones = 0L;
     }
 
-    public boolean existsTelefone(String ddd, Long numero){
+    // verifica se existe um telefone nos seus numeros. usando o ddd e o numero
+    public boolean existsTelefone(String ddd, Long numero) {
         Telefone novo = new Telefone(0L, ddd, numero);
         boolean exists = false;
-        for (Telefone telefone : this.telefones){
-            if (telefone.equals(novo)){
+        for (Telefone telefone : this.telefones) {
+            if (telefone.equals(novo)) {
                 exists = true;
                 break;
             }
@@ -27,16 +28,18 @@ public class Contato {
         return exists;
     }
 
-    public boolean inserirTelefone(String ddd, Long numero){
+    // insere um telefone novo
+    public boolean inserirTelefone(String ddd, Long numero) {
         Telefone novo = new Telefone((lengthTelefones + 1), ddd, numero);
         lengthTelefones++;
         this.telefones.add(novo);
         return true;
     }
 
-    public boolean removerTelefone(long id){
-        for (Telefone telefoneRemover : this.telefones){
-            if (telefoneRemover.getId() == id){
+    // remove um telefone da lista de numeros, usando o id como referência
+    public boolean removerTelefone(long id) {
+        for (Telefone telefoneRemover : this.telefones) {
+            if (telefoneRemover.getId() == id) {
                 this.telefones.remove(telefoneRemover);
                 this.lengthTelefones--;
                 return true;
@@ -44,47 +47,57 @@ public class Contato {
         }
         return false;
     }
-    public Long getId(){
+
+    public Long getId() {
         return this.id;
     }
-    public String getNome(){
+
+    // retorna o nome do contato
+    public String getNome() {
         return this.nome;
     }
 
-    public String getSobreNome(){
+    // retorna o sobre Nome do contato
+    public String getSobreNome() {
         return this.sobreNome;
     }
 
-    public void setNome(String nome){
+    // altera o nome do contato
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public void setSobreNome(String sobreNome){
+    // altera o sobre nome do contato
+    public void setSobreNome(String sobreNome) {
         this.sobreNome = sobreNome;
     }
 
-    public Long getLengthTelefones(){
+    // retorna a quantidade de telefones que o contato tem
+    public Long getLengthTelefones() {
         return this.lengthTelefones;
     }
 
-    public ArrayList<Telefone> getTelefones(){
+    // retorna o array com todos os telefones do contato
+    public ArrayList<Telefone> getTelefones() {
         return this.telefones;
     }
 
-    public boolean equals(Contato novo){
+    // verifica se um contato é igual ao outro.
+    public boolean equals(Contato novo) {
         String nomeCompleto = this.getNome() + this.getSobreNome();
         String novoNomeCompleto = novo.getNome() + this.getSobreNome();
-        if(nomeCompleto.equals(novoNomeCompleto)){
+        if (nomeCompleto.equals(novoNomeCompleto)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public void listarNumero(){
+    // listar os numeros que o contato tem.
+    public void listarNumero() {
         System.out.print("Telefones: ");
-        for(Telefone telefone : this.getTelefones()){
-            System.out.print("id:  "+telefone.getId()+" ("+ telefone.getDdd() +") "+ telefone.getNumero()+"\t");
+        for (Telefone telefone : this.getTelefones()) {
+            System.out.print("id:  " + telefone.getId() + " (" + telefone.getDdd() + ") " + telefone.getNumero() + "\t");
         }
         System.out.println(" ");
     }

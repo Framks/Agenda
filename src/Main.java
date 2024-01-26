@@ -310,10 +310,10 @@ public class Main {
                 String next = scan.nextLine();
             }
             switch (operacao){
-                case 1:
+                case 1: // listar contatos
                     listarContatos(contatos, 2);
                     break;
-                case 2:
+                case 2: // adcionar contato novo ja adcionando um numero
                     if(adcionarContato(scan, contatos, proximoId)){
                         proximoId++;
                         System.out.println("adcionado com sucesso");
@@ -321,24 +321,24 @@ public class Main {
                         System.out.println("contato não adcionado");
                     }
                     break;
-                case 3:
+                case 3: // remover um contato
                     if (removerContato(scan, contatos)){
                         System.out.println("removido com sucesso");
                     }else{
                         System.out.println("contato não removido");
                     }
                     break;
-                case 4:
+                case 4: // alterar um contato
                     if (alterarContato(scan, contatos)){
                         System.out.println("alterado com sucesso");
                     }else{
                         System.out.println("contato não removido");
                     }
                     break;
-                case 5:
+                case 5: // sair do programa.
                     rodando = false;
                     break;
-                default:
+                default: // nem uma das opções ou comandos invalidos
                     System.out.println("comando invalido, digite a operação valida no menu");
             }
         }

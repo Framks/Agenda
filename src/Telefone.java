@@ -27,6 +27,7 @@ public class Telefone {
         this.numero = numero;
     }
 
+    // verificar se um telefone é igual a esse
     public boolean equals(Telefone telefone){
         if(!telefone.getDdd().equals(this.getDdd())){
             return false;
