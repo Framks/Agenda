@@ -18,6 +18,15 @@ public class Telefone {
     public Long getNumero(){
         return this.numero;
     }
+
+    public void setDdd(String ddd){
+        this.ddd = ddd;
+    }
+
+    public void setNumero(Long numero){
+        this.numero = numero;
+    }
+
     public boolean equals(Telefone telefone){
         if(!telefone.getDdd().equals(this.getDdd())){
             return false;

@@ -44,17 +44,23 @@ public class Contato {
         }
         return false;
     }
-
     public Long getId(){
         return this.id;
     }
-
     public String getNome(){
         return this.nome;
     }
 
     public String getSobreNome(){
         return this.sobreNome;
+    }
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
+    public void setSobreNome(String sobreNome){
+        this.sobreNome = sobreNome;
     }
 
     public Long getLengthTelefones(){
@@ -78,7 +84,7 @@ public class Contato {
     public void listarNumero(){
         System.out.print("Telefones: ");
         for(Telefone telefone : this.getTelefones()){
-            System.out.print("("+ telefone.getDdd() +") "+ telefone.getNumero()+"\t");
+            System.out.print("id:  "+telefone.getId()+" ("+ telefone.getDdd() +") "+ telefone.getNumero()+"\t");
         }
         System.out.println(" ");
     }

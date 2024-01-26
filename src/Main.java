@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -189,17 +190,74 @@ public class Main {
                     if (contatoModificar.getId() == idMoficar){
                         switch (operacao){
                             case 1:
-
+                                System.out.print("digite o ddd do numero: ");
+                                String ddd = scan.nextLine();
+                                System.out.print("digite o nnumero: ");
+                                Long numero = Long.parseLong(scan.nextLine());
+                                boolean teste = false;
+                                for (Contato contato : contatos){
+                                    if (contato.existsTelefone(ddd,numero)){
+                                        teste = true;
+                                    }
+                                }
+                                if (!teste){
+                                    contatoModificar.inserirTelefone(ddd,numero);
+                                }else{
+                                    System.out.println("numero ja existente começe novamente!");
+                                }
                                 break;
                             case 2:
+                                System.out.print("digite o nome ( ou se não quiser mudar o nome tecle enter): ");
+                                String nome = scan.nextLine();
+                                System.out.print("digite o sobre nome (ou se não quiser mudar o sobre nome tecle enter)");
+                                String sobreNome = scan.nextLine();
+                                if (!nome.equals("")){
+                                    contatoModificar.setNome(nome);
+                                }
+                                if (!sobreNome.equals("")){
+                                    contatoModificar.setSobreNome(sobreNome);
+                                }
                                 break;
                             case 3:
+                                System.out.print("digite o id do telefone que deseja modificar: ");
+                                int idModificar;
+                                try{
+                                    idModificar = scan.nextInt();
+                                }catch(Exception e){
+                                    idModificar = 0;
+                                    System.out.println(e.getMessage());
+                                }
+                                for (Telefone telefone : contatoModificar.getTelefones()){
+                                    if (telefone.getId() == idMoficar){
+                                        System.out.print("digite o ddd (ou deixe em branco para não mudar):");
+                                        String dddNovo = scan.nextLine();
+                                        System.out.print("digite o sobre nome (ou se não quiser mudar o sobre nome tecle enter)");
+                                        Long novonumero = scan.nextLong();
+                                        if (!dddNovo.equals("")){
+                                            telefone.setDdd(dddNovo);
+                                        }
+                                        if (novonumero != null){
+                                            if (novonumero != 0){
+                                                telefone.setNumero(novonumero);
+                                            }
+                                        }
+                                    }
+                                }
                                 break;
                             case 4:
+                                System.out.print("digite o id do telefone que deseja remover");
+                                long id = scan.nextLong();
+                                for (Telefone telefone : contatoModificar.getTelefones()){
+                                    if (telefone.getId() == id){
+                                        contatoModificar.removerTelefone(id);
+                                        break;
+                                    }
+                                }
                                 break;
                             default :
                                 System.out.println("operação invalido começar de novo!!\n");
                         }
+                        break;
                     }
                 }
             }
@@ -235,7 +293,7 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Contato> contatos;
         contatos = lerContatos();
-        long proximoId = contatos.size()+1;
+        long proximoId = contatos.getLast().getId()+1;
         Scanner scan = new Scanner(System.in);
         boolean rodando = true;
         System.out.println("##################\n##### AGENDA #####\n##################");
