@@ -177,7 +177,7 @@ public class Main {
                     break;
                 }
 
-                listarContatos(contatos, 2);
+                listarContatos(contatos, 1);
                 System.out.print("selecione o id do contato que vc quer modificar: ");
                 int idMoficar = receberOperacao(scan);
 
@@ -214,6 +214,7 @@ public class Main {
                                 }
                                 break;
                             case 3:
+                                contatoModificar.listarNumero();
                                 System.out.print("digite o id do telefone que deseja modificar: ");
                                 int idModificar = receberOperacao(scan);
 
@@ -235,6 +236,7 @@ public class Main {
                                 }
                                 break;
                             case 4:
+                                contatoModificar.listarNumero();
                                 System.out.print("digite o id do telefone que deseja remover: ");
                                 long id = scan.nextLong();
                                 for (Telefone telefone : contatoModificar.getTelefones()){
