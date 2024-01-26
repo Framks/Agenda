@@ -31,9 +31,10 @@ public class Telefone {
     public boolean equals(Telefone telefone){
         if(!telefone.getDdd().equals(this.getDdd())){
             return false;
-        }else if(telefone.getNumero() != this.getNumero()){
+        }else if(!telefone.getNumero().equals(this.getNumero())){
             return false;
+        }else{
+            return true;
         }
-        return true;
     }
 }
