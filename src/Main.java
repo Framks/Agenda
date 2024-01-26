@@ -77,19 +77,26 @@ public class Main {
     public static boolean adcionarContato(Scanner scan, ArrayList<Contato> contatos,long proximoId){
         try {
             boolean result = true;
-            listarContatos(contatos, 2);
-            System.out.print("vamos começar pelo nome: ");
+
+            System.out.print("Digite o Nome: ");
             String nome = scan.nextLine();
             System.out.print("Sobre nome: ");
             String sobreNome = scan.nextLine();
+
             Contato novo = new Contato(proximoId,nome,sobreNome);
             for(Contato contato : contatos) {
                 if (contato.equals(novo)) {
-                    System.out.print("Conatato com mesmo nome");
-                    result = false;
-                    break;
+                    System.out.println("Contato com mesmo nome");
+                    System.out.println("QUER MANTER? (\"s\" para sim e \"n\" vara não)");
+                    String manter = scan.nextLine();
+                    if (manter.equals("s") || manter.equals("S")){
+                        break;
+                    }else{
+                        return false;
+                    }
                 }
             }
+
             boolean equal = false;
             while(true){
                 System.out.println("vamos adcionar um numero para o novo contato; ");
@@ -161,8 +168,8 @@ public class Main {
                         "2 - modificar nome \n" +
                         "3 - modificar telefone\n" +
                         "4 - remover telefone\n"+
-                        "5 - volta ao menu anterior"+
-                        "digite a operaçãoa: ");
+                        "5 - volta ao menu anterior\n"+
+                        "digite a operação: ");
 
                 int operacao = receberOperacao(scan);
 
@@ -197,7 +204,7 @@ public class Main {
                             case 2:
                                 System.out.print("digite o nome ( ou se não quiser mudar o nome tecle enter): ");
                                 String nome = scan.nextLine();
-                                System.out.print("digite o sobre nome (ou se não quiser mudar o sobre nome tecle enter)");
+                                System.out.print("digite o sobre nome (ou se não quiser mudar o sobre nome tecle enter): ");
                                 String sobreNome = scan.nextLine();
                                 if (!nome.equals("")){
                                     contatoModificar.setNome(nome);
@@ -212,9 +219,9 @@ public class Main {
 
                                 for (Telefone telefone : contatoModificar.getTelefones()){
                                     if (telefone.getId() == idMoficar){
-                                        System.out.print("digite o ddd (ou deixe em branco para não mudar):");
+                                        System.out.print("digite o ddd (ou deixe em branco para não mudar): ");
                                         String dddNovo = scan.nextLine();
-                                        System.out.print("digite o sobre nome (ou se não quiser mudar o sobre nome tecle enter)");
+                                        System.out.print("digite o sobre nome (ou se não quiser mudar o sobre nome tecle enter): ");
                                         Long novonumero = scan.nextLong();
                                         if (!dddNovo.equals("")){
                                             telefone.setDdd(dddNovo);
@@ -228,7 +235,7 @@ public class Main {
                                 }
                                 break;
                             case 4:
-                                System.out.print("digite o id do telefone que deseja remover");
+                                System.out.print("digite o id do telefone que deseja remover: ");
                                 long id = scan.nextLong();
                                 for (Telefone telefone : contatoModificar.getTelefones()){
                                     if (telefone.getId() == id){
@@ -266,10 +273,11 @@ public class Main {
         System.out.println(">>>> Contatos <<<<");
         System.out.println("Id | Nome");
         for(Contato contato : contatos){
-            System.out.println(contato.getId()+" | "+contato.getNome()+" " +contato.getSobreNome());
+            System.out.print(contato.getId()+" | "+contato.getNome()+" " +contato.getSobreNome()+" ; ");
             if (condicao == 2){
                 contato.listarNumero();
             }
+            System.out.println(" ");
         }
     }
 
