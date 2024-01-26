@@ -126,10 +126,8 @@ public class Main {
             while (true){
                 listarContatos(contatos, 2);
                 System.out.print("com o id do contato selecione qual vc deseja remover: ");
-                int operacao;
+                int operacao = receberOperacao(scan);
                 try{
-                    operacao = scan.nextInt();
-                    String next = scan.nextLine();
                     if(operacao == 0){
                         break;
                     }
@@ -158,34 +156,24 @@ public class Main {
     // remover algum numero que o contato tenha
     public static boolean alterarContato(Scanner scan,ArrayList<Contato> contatos){
         try {
-            listarContatos(contatos, 2);
             while (true){
-                System.out.print("selecione o id do contato que vc quer modificar: ");
-                int idMoficar;
-                try{
-                    idMoficar = scan.nextInt();
-                    String next = scan.nextLine();
-                }catch (Exception e){
-                    idMoficar = 0;
-                    String next = scan.nextLine();
-                }
                 System.out.print("1 - adcionar um numero\n" +
                         "2 - modificar nome \n" +
                         "3 - modificar telefone\n" +
                         "4 - remover telefone\n"+
-                        "0 - volta ao menu anterior"+
+                        "5 - volta ao menu anterior"+
                         "digite a operaçãoa: ");
-                int operacao;
-                try{
-                    operacao = scan.nextInt();
-                    String nex = scan.nextLine();
-                }catch (Exception e){
-                    operacao = 0;
-                    String next = scan.nextLine();
-                }
-                if (operacao == 0){
+
+                int operacao = receberOperacao(scan);
+
+                if (operacao == 5){
                     break;
                 }
+
+                listarContatos(contatos, 2);
+                System.out.print("selecione o id do contato que vc quer modificar: ");
+                int idMoficar = receberOperacao(scan);
+
                 for (Contato contatoModificar : contatos){
                     if (contatoModificar.getId() == idMoficar){
                         switch (operacao){
@@ -220,13 +208,8 @@ public class Main {
                                 break;
                             case 3:
                                 System.out.print("digite o id do telefone que deseja modificar: ");
-                                int idModificar;
-                                try{
-                                    idModificar = scan.nextInt();
-                                }catch(Exception e){
-                                    idModificar = 0;
-                                    System.out.println(e.getMessage());
-                                }
+                                int idModificar = receberOperacao(scan);
+
                                 for (Telefone telefone : contatoModificar.getTelefones()){
                                     if (telefone.getId() == idMoficar){
                                         System.out.print("digite o ddd (ou deixe em branco para não mudar):");
@@ -290,6 +273,19 @@ public class Main {
         }
     }
 
+    //para cada seleção de menu o recebeOperação faz a verificação se é um numero valido
+    public static int receberOperacao(Scanner scan){
+        int operacao;
+        try{
+            operacao = scan.nextInt();
+            String next = scan.nextLine();
+        }catch (Exception e){
+            operacao = 0;
+            String next = scan.nextLine();
+        }
+        return operacao;
+    }
+
     public static void main(String[] args) {
         ArrayList<Contato> contatos;
         contatos = lerContatos();
@@ -301,14 +297,8 @@ public class Main {
         while (rodando) {
             printCabecalho(contatos);
             int operacao;
-            try{
-                System.out.print("digite a operação: ");
-                operacao = scan.nextInt();
-                String next = scan.nextLine();
-            }catch (Exception e){
-                operacao = 0;
-                String next = scan.nextLine();
-            }
+            System.out.print("digite a operação: ");
+            operacao = receberOperacao(scan); // recebe um numero valido para a operação
             switch (operacao){
                 case 1: // listar contatos
                     listarContatos(contatos, 2);
