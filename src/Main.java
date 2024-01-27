@@ -101,8 +101,8 @@ public class Main {
             System.out.println("vamos adcionar um numero para o novo contato; ");
             while(true){
                 String ddd = receberDdd(scan);
-                System.out.print("agora digite o numero: ");
-                Long numero = scan.nextLong();
+                Long numero = receberNumero(scan);
+
                 for (Contato contato : contatos){
                     if (contato.existsTelefone(ddd,numero)){
                         System.out.println("numero ja existente em outro contato; ");
@@ -131,7 +131,7 @@ public class Main {
         try {
             while (true){
                 listarContatos(contatos, 2);
-                System.out.print("com o id do contato selecione qual vc deseja remover: ");
+                System.out.print("digite id do contato selecione qual vc deseja remover: ");
                 int operacao = receberOperacao(scan);
                 try{
                     if(operacao == 0){
@@ -218,17 +218,29 @@ public class Main {
 
                                 for (Telefone telefone : contatoModificar.getTelefones()){
                                     if (telefone.getId() == idTelefoneModificar){
+
                                         String dddNovo = receberDdd(scan);
-                                        System.out.print("digite o numero (ou se não quiser mudar o numero tecle enter): ");
-                                        Long novonumero = scan.nextLong();
-                                        if (!dddNovo.equals("")){
-                                            telefone.setDdd(dddNovo);
-                                        }
-                                        if (novonumero != null){
-                                            if (novonumero != 0){
-                                                telefone.setNumero(novonumero);
+                                        Long novonumero = receberNumero(scan);
+
+                                        boolean modificaTelefone = true;
+                                        for (Contato c: contatos){
+                                            if (c.existsTelefone(dddNovo,novonumero)){
+                                                System.out.println("Numero de telefone ja existe em "+ c.getNome()+" "+c.getSobreNome());
+                                                modificaTelefone = false;
+                                                break;
                                             }
                                         }
+                                        if (modificaTelefone){
+                                            if (!dddNovo.equals("")){
+                                                telefone.setDdd(dddNovo);
+                                            }
+                                            if (novonumero != null){
+                                                if (novonumero != 0){
+                                                    telefone.setNumero(novonumero);
+                                                }
+                                            }
+                                        }
+                                        break;
                                     }
                                 }
                                 break;
@@ -303,7 +315,7 @@ public class Main {
                 int s = Integer.parseInt(ddd);
                 break;
             }catch (Exception e){
-                System.out.print("digite um ddd valido");
+                System.out.print("digite um ddd valido: ");
             }
         }
         return ddd;
@@ -358,9 +370,9 @@ public class Main {
                     break;
                 case 4: // alterar um contato
                     if (alterarContato(scan, contatos)){
-                        System.out.println("alterado com sucesso");
+                        System.out.println("alterações salvas");
                     }else{
-                        System.out.println("contato não removido");
+                        System.out.println("alterações não salvas");
                     }
                     break;
                 case 5: // sair do programa.
