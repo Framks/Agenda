@@ -98,10 +98,9 @@ public class Main {
             }
 
             boolean equal = false;
+            System.out.println("vamos adcionar um numero para o novo contato; ");
             while(true){
-                System.out.println("vamos adcionar um numero para o novo contato; ");
-                System.out.print("começe com o ddd: ");
-                String ddd = scan.nextLine();
+                String ddd = receberDdd(scan);
                 System.out.print("agora digite o numero: ");
                 Long numero = scan.nextLong();
                 for (Contato contato : contatos){
@@ -185,20 +184,19 @@ public class Main {
                     if (contatoModificar.getId() == idMoficar){
                         switch (operacao){
                             case 1:
-                                System.out.print("digite o ddd do numero: ");
-                                String ddd = scan.nextLine();
-                                System.out.print("digite o nnumero: ");
-                                Long numero = Long.parseLong(scan.nextLine());
+                                // recebeas informações de ddd e numero
+                                String ddd = receberDdd(scan);
+                                Long numero = receberNumero(scan);
+
                                 boolean teste = false;
                                 for (Contato contato : contatos){
                                     if (contato.existsTelefone(ddd,numero)){
+                                        System.out.println("este numero pertence à: " + contato.getNome() +" "+contato.getSobreNome());
                                         teste = true;
                                     }
                                 }
                                 if (!teste){
                                     contatoModificar.inserirTelefone(ddd,numero);
-                                }else{
-                                    System.out.println("numero ja existente começe novamente!");
                                 }
                                 break;
                             case 2:
@@ -216,13 +214,12 @@ public class Main {
                             case 3:
                                 contatoModificar.listarNumero();
                                 System.out.print("digite o id do telefone que deseja modificar: ");
-                                int idModificar = receberOperacao(scan);
+                                int idTelefoneModificar = receberOperacao(scan);
 
                                 for (Telefone telefone : contatoModificar.getTelefones()){
-                                    if (telefone.getId() == idMoficar){
-                                        System.out.print("digite o ddd (ou deixe em branco para não mudar): ");
-                                        String dddNovo = scan.nextLine();
-                                        System.out.print("digite o sobre nome (ou se não quiser mudar o sobre nome tecle enter): ");
+                                    if (telefone.getId() == idTelefoneModificar){
+                                        String dddNovo = receberDdd(scan);
+                                        System.out.print("digite o numero (ou se não quiser mudar o numero tecle enter): ");
                                         Long novonumero = scan.nextLong();
                                         if (!dddNovo.equals("")){
                                             telefone.setDdd(dddNovo);
@@ -296,6 +293,37 @@ public class Main {
         return operacao;
     }
 
+    // recebe o ddd e verifica se não é um texto ou outas coisas
+    public static String receberDdd(Scanner scan){
+        String ddd = "";
+        System.out.print("Digite o ddd: ");
+        while (true){
+            ddd = scan.nextLine();
+            try{
+                int s = Integer.parseInt(ddd);
+                break;
+            }catch (Exception e){
+                System.out.print("digite um ddd valido");
+            }
+        }
+        return ddd;
+    }
+
+    // recebe um numero e verifica se ele é realmente long
+    public static long receberNumero(Scanner scan){
+        Long numero = null;
+        System.out.print("Digite o Número: ");
+        while (true){
+            String in = scan.nextLine();
+            try{
+                numero = Long.parseLong(in);
+                break;
+            }catch (Exception e){
+                System.out.print("DIGITE UM NUMERO valido: ");
+            }
+        }
+        return numero;
+    }
     public static void main(String[] args) {
         ArrayList<Contato> contatos;
         contatos = lerContatos();
